@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.views.generic import DetailView
 
-class HomePage(TemplateView):
-	template_name = "base.html"
+class PowerRankingView(DetailView):
+	game = None
+	template_name = 'power_ranking.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(HomePage, self).get_context_data(**kwargs)
+	def get_context_data(request, **kwargs):
+		context = super(PowerRankingView, self).get_context)data(**kwargs)	
 		return context
-
+			

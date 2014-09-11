@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from uchicagosmash.powerranking import urls
+from uchicagosmash.powerranking import urls, views
 
 
 from django.contrib import admin
