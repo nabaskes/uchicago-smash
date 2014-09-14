@@ -1,13 +1,20 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import *
+from django.contrib.auth import views
 from uchicagosmash.powerranking.models import *
 
+def login(request):
+	views.login(request, 'login.html')
 
-class PowerRankingView(DetailView):
+def logout(request):
+	views.logout(request, '/')
+
+class PowerRankingView(ListView):
+	model = Smasher
 	game = None
 	template_name = 'power_ranking.html'
 
-	def get_context_data(request, **kwargs):
+def get_context_data(request, **kwargs):
 		context = super(PowerRankingView, self).get_context_data(**kwargs)
 		pr = []		
 		smashers = Smasher.objects.all()
