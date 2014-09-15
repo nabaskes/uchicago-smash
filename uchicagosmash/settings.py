@@ -51,6 +51,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+	'uchicagosmash.powerranking.backend.UChicagoLDAPBackend',
+	'django.contrib.auth.backends.ModelBackend',
+)
+
 ROOT_URLCONF = 'uchicagosmash.urls'
 
 WSGI_APPLICATION = 'uchicagosmash.wsgi.application'
