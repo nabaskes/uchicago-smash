@@ -26,7 +26,7 @@ class Smasher(models.Model):
 	smash4_elo = models.IntegerField(default=0)
 
 class Match(models.Model):
-	winner = models.ForeignKey(Smasher)
-	loser = models.ForeignKey(Smasher)
+	winner = models.ForeignKey(Smasher, related_name="winners")
+	loser = models.ForeignKey(Smasher, related_name="losers")
 	players = [winner, loser]
-	verified = models.BooleanField()
+	verified = models.BooleanField(default=False)

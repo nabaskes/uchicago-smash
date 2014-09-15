@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.views.generic import *
-from django.contrib.auth import views
+from django.contrib.auth import views as auth_views
 from uchicagosmash.powerranking.models import *
 
 def login(request):
-	views.login(request, 'login.html')
+	return auth_views.login(request, 'login.html')
 
 def logout(request):
-	views.logout(request, '/')
+	return auth_views.logout(request, '/')
 
 class PowerRankingView(ListView):
 	model = Smasher

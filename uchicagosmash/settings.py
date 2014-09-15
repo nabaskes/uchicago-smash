@@ -55,6 +55,7 @@ ROOT_URLCONF = 'uchicagosmash.urls'
 
 WSGI_APPLICATION = 'uchicagosmash.wsgi.application'
 
+LOGIN_REDIRECT_URL = '/'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
