@@ -30,7 +30,7 @@ class MatchForm(forms.ModelForm):
 class MatchVerificationForm(forms.ModelForm):
 	class Meta:
 		model = Match
-		fields = ('verified')
+		fields = ('verified',)
 
 	def __init__(self, *args, **kwargs):
 		super(MatchVerificationForm, self).__init__(*args, **kwargs)
