@@ -32,8 +32,16 @@ class Smasher(models.Model):
 	elo['pm'] = models.IntegerField(default=0)
 	elo['smash4'] = models.IntegerField(default=0)
 
+	def __unicode__(self):
+		name = self.user.get_full_name()
+		return "%s, %s, %s" % (self.tag, self.user.username, name)
+
 class Match(models.Model):
 	winner = models.ForeignKey(Smasher, related_name="winners")
 	loser = models.ForeignKey(Smasher, related_name="losers")
 	game = models.CharField(max_length=4, choices=GAMES)
 	verified = models.BooleanField(default=False)
+
+	def __unicode__(self):
+		
+		return "%s; Winner: %s Loser: %s" % (self.game, self.winner.tag, self.loser.tag)

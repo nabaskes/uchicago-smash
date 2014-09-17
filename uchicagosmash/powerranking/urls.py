@@ -8,7 +8,7 @@ urlpatterns = patterns('',
 	url(r'^power_ranking/pm/$', PowerRankingView.as_view(game="pm"), name='pr-pm'),
 	url(r'^power_ranking/smash4/$', PowerRankingView.as_view(game="smash4"), name='pr-smash4'),
 	url(r'^record_match/$', MatchRecordView.as_view(), name='record-match'),
-	url(r'^verify_match/$', MatchVerificationView.as_view(), name='verify-match'),
+	url(r'^verify_match/$', MatchVerificationList.as_view(), name='verify-match'),
 	url(r'^login/$', login, name='login'),
 	url(r'^logout/$', logout, name='logout'),
 )

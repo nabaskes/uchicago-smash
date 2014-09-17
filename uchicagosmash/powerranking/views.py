@@ -65,9 +65,10 @@ class MatchVerificationList(ListView):
 	template_name = "power_ranking/unverified_matches.html"
 
 	def get_context_data(self, **kwargs):
-		context = super(PowerRankingView, self).get_context_data(**kwargs)
-		my_unverified_matches = Match.objects.filter(Q(winner__user=request.user) | Q(loser__user=request.user), verified=False)
+		context = super(MatchVerificationList, self).get_context_data(**kwargs)
+		my_unverified_matches = Match.objects.filter(Q(winner__user=self.request.user) | Q(loser__user=self.request.user), verified=False)
 		context['matches'] = my_unverified_matches
+		context['smasher'] = Smasher.objects.filter(user=self.request.user)[0]
 		return context
 
 class PowerRankingView(ListView):
