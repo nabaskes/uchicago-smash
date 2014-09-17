@@ -18,7 +18,7 @@ DORMS = (
 )
 
 GAMES = (
-	("M", "Super Smash Bros Melee"),
+	("M", "Melee"),
 	("P:M", "Project M"),
 	("S4", "Smash Bros for Wii U/3DS"),
 )

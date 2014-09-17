@@ -29,13 +29,12 @@ class RegistrationView(FormView):
 		smasher.save()
 		return HttpResponseRedirect('/')
 
-class MatchReportView(FormView):
+class MatchRecordView(FormView):
 	form_class = MatchForm
-	template_name = 'power_ranking/match_report.html'
+	template_name = 'power_ranking/record_match.html'
 
-	@login_required
 	def dispatch(self, request, *args, **kwargs):
-		return super(MatchReportView, self).dispatch(request, *args, **kwargs)
+		return super(MatchRecordView, self).dispatch(request, *args, **kwargs)
 
 	def form_valid(self, form):
 		match = form.save(commit=False)
@@ -45,7 +44,7 @@ class MatchReportView(FormView):
 class PowerRankingView(DetailView):
 	model = Smasher
 	game = None
-	template_name = 'power_ranking.html'
+	template_name = 'power_ranking/display.html'
 
 	def get_context_data(request, **kwargs):
 		context = super(PowerRankingView, self).get_context_data(**kwargs)
