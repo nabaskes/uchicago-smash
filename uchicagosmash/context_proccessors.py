@@ -3,4 +3,9 @@ from django.db.models import Q
 
 def notification(request):
 	unverified_matches = Match.objects.filter(Q(winner__user=request.user) | Q(loser__user=request.user), verified=False).count()
-	return {'notifications':unverified_matches}
+	smasher = Smasher.objects.filter(user=request.user)
+	if smasher:
+		tag = smasher[0].tag
+	else:
+		tag = ''
+	return {'notifications':unverified_matches, 'tag':tag}
