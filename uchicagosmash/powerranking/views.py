@@ -14,7 +14,7 @@ def logout(request):
 
 class RegistrationView(FormView):
 	form_class = RegistrationForm
-	template_name = 'registration.html'
+	template_name = 'power_ranking/registration.html'
 	
 	@login_required
 	def dispatch(self, request, *args, **kwargs):
@@ -27,6 +27,19 @@ class RegistrationView(FormView):
 		smasher = form.save(commit=False)
 		smasher.user = self.request.user
 		smasher.save()
+		return HttpResponseRedirect('/')
+
+class MatchReportView(FormView):
+	form_class = MatchForm
+	template_name = 'power_ranking/match_report.html'
+
+	@login_required
+	def dispatch(self, request, *args, **kwargs):
+		return super(MatchReportView, self).dispatch(request, *args, **kwargs)
+
+	def form_valid(self, form):
+		match = form.save(commit=False)
+		match.save()
 		return HttpResponseRedirect('/')
 
 class PowerRankingView(DetailView):
