@@ -1,5 +1,3 @@
-from uchicagosmash.powerranking.models import *
-
 def expected_value(ra, rb):
 	return 1/(1 + pow(10, (rb - ra)/400))
 

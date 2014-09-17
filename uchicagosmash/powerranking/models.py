@@ -34,6 +34,5 @@ class Smasher(models.Model):
 class Match(models.Model):
 	winner = models.ForeignKey(Smasher, related_name="winners")
 	loser = models.ForeignKey(Smasher, related_name="losers")
-	players = [winner, loser]
 	game = models.CharField(max_length=4, choices=GAMES)
 	verified = models.BooleanField(default=False)
