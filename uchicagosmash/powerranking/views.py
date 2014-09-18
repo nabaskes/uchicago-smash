@@ -40,6 +40,7 @@ class MatchRecordView(FormView):
 
 	def form_valid(self, form):
 		match = form.save(commit=False)
+		match.submitter = Smasher.objects.filter(user=self.request.user)[0]
 		match.save()
 		return HttpResponseRedirect('/')
 

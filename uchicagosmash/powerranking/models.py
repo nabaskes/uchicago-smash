@@ -43,6 +43,7 @@ class Match(models.Model):
 	game = models.CharField(max_length=8, choices=GAMES)
 	date = models.DateTimeField(default=timezone.now)
 	verified = models.BooleanField(default=False)
+	submitter = models.ForeignKey(Smasher, related_name="submitters")
 
 	def __unicode__(self):
 		
