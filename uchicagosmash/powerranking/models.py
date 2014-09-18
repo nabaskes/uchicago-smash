@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 
 DORMS = (
@@ -28,18 +29,19 @@ class Smasher(models.Model):
 	tag = models.CharField(max_length=64)	
 	dorm = models.CharField(max_length=4, choices=DORMS)
 	elo = {}
-	elo['melee'] = models.IntegerField(default=0)
-	elo['pm'] = models.IntegerField(default=0)
-	elo['smash4'] = models.IntegerField(default=0)
+	elo['melee'] = models.IntegerField(default=1000)
+	elo['pm'] = models.IntegerField(default=1000)
+	elo['smash4'] = models.IntegerField(default=1000)
 
 	def __unicode__(self):
 		name = self.user.get_full_name()
-		return "%s, %s, %s" % (self.tag, self.user.username, name)
+		return "%s, %s" % (self.tag, name)
 
 class Match(models.Model):
 	winner = models.ForeignKey(Smasher, related_name="winners")
 	loser = models.ForeignKey(Smasher, related_name="losers")
-	game = models.CharField(max_length=4, choices=GAMES)
+	game = models.CharField(max_length=8, choices=GAMES)
+	date = models.DateTimeField(default=timezone.now)
 	verified = models.BooleanField(default=False)
 
 	def __unicode__(self):

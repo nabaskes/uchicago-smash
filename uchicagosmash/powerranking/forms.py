@@ -9,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
 	agree = forms.BooleanField()
 
 	def __init__(self, *args, **kwargs):
-		super(GameRegistrationForm, self).__init__(*args, **kwargs)
+		super(RegistrationForm, self).__init__(*args, **kwargs)
 		self.fields['dorm'].widget.attrs['class'] = 'form-control'
 		self.fields['dorm'].widget.attrs['required'] = 'required'
 		self.fields['tag'].widget.attrs['required'] = 'required'
@@ -24,7 +24,9 @@ class MatchForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
 		super(MatchForm, self).__init__(*args, **kwargs)
+		self.fields['winner'].widget.attrs['class'] = 'form-control'
 		self.fields['winner'].widget.attrs['required'] = 'required'
+		self.fields['loser'].widget.attrs['class'] = 'form-control'
 		self.fields['loser'].widget.attrs['required'] = 'required'
 		self.fields['game'].widget.attrs['class'] = 'form-control'
 		self.fields['game'].widget.attrs['required'] = 'required'

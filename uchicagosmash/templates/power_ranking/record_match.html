@@ -4,15 +4,15 @@
 <div class="page-header">
 	<h1>Record Match Results</h1>
 </div>
-
+{% if user.is_authenticated %}
 <form role="form" method="post">
 	{% csrf_token %}
 	<div class="form-group">
 		<div class="row">
 			<div class="col-md-4">
 				<label for="winner">Winner's tag</label>
+				{{ form.winner }}
 				{{ form.winner.errors }}
-				<input id="winner" type="text" class="form-control" name="winner" required>
 			</div>
 		</div>
 	</div>
@@ -20,8 +20,8 @@
 		<div class="row">
 			<div class="col-md-4">
 				<label for="loser">Loser's tag</label>
+				{{ form.loser }}
 				{{ form.loser.errors }}
-				<input id="winner" type="text" class="form-control" name="winner" required>
 			</div>
 		</div>
 	</div>
@@ -36,5 +36,8 @@
 	</div>
 	<button class="btn btn-primary" type="submit">Submit</button>
 </form>
+{% else %}
+<p>Please <a href="{% url 'login' %}">log in</a> to report your match.</p>
+{% endif %}
 
 {% endblock %}

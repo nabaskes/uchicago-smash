@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import *
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,6 @@ class RegistrationView(FormView):
 	form_class = RegistrationForm
 	template_name = 'power_ranking/registration.html'
 	
-	@login_required
 	def dispatch(self, request, *args, **kwargs):
 		if Smasher.objects.filter(user=request.user).exists():
 			messages.error(self.request, "You are already registered.")
