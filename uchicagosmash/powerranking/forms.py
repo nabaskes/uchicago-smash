@@ -32,11 +32,5 @@ class MatchForm(forms.ModelForm):
 		self.fields['game'].widget.attrs['required'] = 'required'
 
 
-class MatchVerificationForm(forms.ModelForm):
-	class Meta:
-		model = Match
-		fields = ('verified',)
-
-	def __init__(self, *args, **kwargs):
-		super(MatchVerificationForm, self).__init__(*args, **kwargs)
-		self.fields['verified'].widget.attrs['required'] = 'required'
+class MatchVerificationForm(forms.Form):
+	verify = forms.BooleanField()

@@ -63,7 +63,7 @@
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.get_full_name }} ({{ tag }}) {% if notifications %}<span class="badge"> {{ notifications }} Unverified {% if notifications > 1 %}Matches{% else %}Match{% endif %}</span>{% endif %}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">My Matches</a></li>
-								<li><a href="{% url 'verify-match' %}">Unverified Matches</a></li>
+								<li><a href="{% url 'unverified-matches' %}">Unverified Matches</a></li>
 								<li><a href="{% url 'logout' %}">Logout</a></li>
 							</ul>
 						</li>

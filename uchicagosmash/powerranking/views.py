@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import *
+from django.shortcuts import *
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -40,26 +41,28 @@ class MatchRecordView(FormView):
 
 	def form_valid(self, form):
 		match = form.save(commit=False)
-		match.submitter = Smasher.objects.filter(user=self.request.user)[0]
+		match.submitter = get_object_or_404(Smasher, user= self.request.user)
 		match.save()
 		return HttpResponseRedirect('/')
 
-class MatchVerificationView(UpdateView):
+class VerifyMatch(DetailView):
 	model = Match
-	form_class = MatchVerificationForm
 	template_name = 'power_ranking/verify_match.html'
 
-	def form_valid(self, form):
-		match = form.save(commit=False)
-		winner = match.winner
-		loser = match.loser
-		updated_elo = calculate_elo(winner.elo[match.game], loser.elo[match.game])
-		winner.elo[match.game] = updated_elo[0]
-		loser.elo[match.game] = updated_elo[1]
-		winner.save()
-		loser.save()
+	def dispatch(self, *args, **kwargs):
+		match = get_object_or_404(Match, id=self.kwargs['pk'])
+		match.verified = True
 		match.save()
-		return HttpResponseRedirect('/')
+		return redirect("unverified-matches")
+
+class DeleteMatch(DetailView):
+	model = Match
+	template_name = 'power_ranking/delete_match.html'
+
+	def dispatch(self, *args, **kwargs):
+		match = get_object_or_404(Match, id=self.kwargs['pk'])
+		match.delete()
+		return redirect("unverified-matches")
 
 class MatchVerificationList(ListView):
 	model = Match
@@ -67,7 +70,7 @@ class MatchVerificationList(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super(MatchVerificationList, self).get_context_data(**kwargs)
-		my_unverified_matches = Match.objects.filter(Q(winner__user=self.request.user) | Q(loser__user=self.request.user), verified=False)
+		my_unverified_matches = Match.objects.exclude(submitter__user=self.request.user).filter(Q(winner__user=self.request.user) | Q(loser__user=self.request.user), verified=False)
 		context['matches'] = my_unverified_matches
 		context['smasher'] = Smasher.objects.filter(user=self.request.user)[0]
 		return context
@@ -78,12 +81,15 @@ class PowerRankingView(ListView):
 	template_name = 'power_ranking/display.html'
 
 	def get_context_data(self, **kwargs):
-		context = super(PowerRankingView, self).get_context_data(**kwargs)
-		pr = []		
+		context = super(PowerRankingView, self).get_context_data(**kwargs)	
 		smashers = Smasher.objects.all()
-		for smasher in smashers:
-			d = {'smasher':smasher.tag, 'elo':smasher.elo[game]}
-			pr.append(d)
-		context['power_ranking'] = pr.sort(key=lambda x: x['elo'], reverse=True)	
+		if self.game == "melee":
+			pr = smashers.order_by('-melee')
+		elif self.game == "pm":
+			pr = smashers.order_by('-pm')
+		elif self.game == "smash4":
+			pr = smashers.order_by('-smash4')
+		context['power_ranking'] = pr
+		context['game'] = self.game
 		return context
 			

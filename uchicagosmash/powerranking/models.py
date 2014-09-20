@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
+from uchicagosmash.powerranking.elo import calculate_elo
 
 
 DORMS = (
@@ -28,10 +29,9 @@ class Smasher(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="+")
 	tag = models.CharField(max_length=64)	
 	dorm = models.CharField(max_length=4, choices=DORMS)
-	elo = {}
-	elo['melee'] = models.IntegerField(default=1000)
-	elo['pm'] = models.IntegerField(default=1000)
-	elo['smash4'] = models.IntegerField(default=1000)
+	melee = models.IntegerField(default=1000)
+	pm = models.IntegerField(default=1000)
+	smash4 = models.IntegerField(default=1000)
 
 	def __unicode__(self):
 		name = self.user.get_full_name()
@@ -46,5 +46,26 @@ class Match(models.Model):
 	submitter = models.ForeignKey(Smasher, related_name="submitters")
 
 	def __unicode__(self):
-		
 		return "%s; Winner: %s Loser: %s" % (self.game, self.winner.tag, self.loser.tag)
+
+	def save(self):
+		if self.verified:
+			if self.game == 'melee':
+				updated_elo = calculate_elo(self.winner.melee, self.loser.melee)
+				self.winner.melee = updated_elo[0]
+				self.loser.melee = updated_elo[1]
+				self.winner.save()
+				self.loser.save()
+			elif self.game == 'pm':
+				updated_elo = calculate_elo(self.winner.pm, self.loser.pm)
+				self.winner.pm = updated_elo[0]
+				self.loser.pm = updated_elo[1]
+				self.winner.save()
+				self.loser.save()
+			elif self.game == 'smash4':
+				updated_elo = calculate_elo(self.winner.smash4, self.loser.smash4)
+				self.winner.smash4 = updated_elo[0]
+				self.loser.smash4 = updated_elo[1]
+				self.winner.save()
+				self.loser.save()
+		super(Match, self).save()
