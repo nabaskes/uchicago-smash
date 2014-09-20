@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import *
+from django.views.generic.base import TemplateView
 from django.shortcuts import *
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -15,6 +16,14 @@ def login(request):
 
 def logout(request):
 	return auth_views.logout(request, '/')
+
+class HomeView(TemplateView):
+	template_name = "index.html"
+
+	def dispatch(self, request, *args, **kwargs):
+		if request.user.is_authenticated() and not Smasher.objects.filter(user=request.user).exists():
+			return redirect("register-smasher")
+		return super(HomeView, self).dispatch(request, *args, **kwargs)
 
 class RegistrationView(FormView):
 	form_class = RegistrationForm
