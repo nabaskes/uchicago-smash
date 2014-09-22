@@ -9,7 +9,7 @@
 		<title>UChicago Smash</title>
 		<meta name="description" content="The University of Chicago Super Smash Brothers community">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{ STATIC_URL }}css/main.css">
 		<link rel="icon" type="image/png" href="{{ STATIC_URL }}img/logo.png">
 		<!--[if lt IE 9]>
@@ -19,6 +19,7 @@
 		
 		<style>
 			body {
+				margin: 0;
 				padding-top: 50px;
 				padding-bottom: 20px;
 			}
@@ -36,13 +37,12 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 		      			</button>
-		     			 <a class="navbar-brand" href="/"><img src="{{ STATIC_URL }}img/banner.png"></a>
+		     			 <a class="navbar-brand" href="/">Home</a>
 		    		</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="#">About</a></li>
 					{% if user.is_staff %}<li><a href="{% url "admin:index" %}">Admin Panel</a></li>{% endif %}
 					{% if user.is_authenticated %}
 					<li><a href="{% url 'record-match' %}">Record Match</a></li>
@@ -58,8 +58,9 @@
 		      		</ul>
 				{% if user.is_authenticated %}
 				<ul class="nav navbar-nav navbar-right">
+						<li><a href="#"><img src="{{ STATIC_URL }}img/facebook.png" /></a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% if smasher %}{{ tag }}{% else %}{{ user.get_full_name }} {% endif %} {% if notifications %}<span class="badge"> {{ notifications }} Unverified {% if notifications > 1 %}Matches{% else %}Match{% endif %}</span>{% endif %}<b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b style="font-size:18px">{% if smasher %}{{ tag }}{% else %}{{ user.get_full_name }} {% endif %}</b> {% if notifications %}<span class="badge"> {{ notifications }} Unverified {% if notifications > 1 %}Matches{% else %}Match{% endif %}</span>{% endif %}<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#">My Matches</a></li>
 								<li><a href="{% url 'unverified-matches' %}">Unverified Matches</a></li>
@@ -88,10 +89,19 @@
 		<div class="container-fluid">
 		{% block content %} {% endblock %}
 		
+		<hr>
+		<footer>
+				<ul class="list-unstyled">
+					<li>&copy; 2014 Chris Eidsmoe</li>
+					<li>Version 14W-<a href="https://github.com/kz26/uchicago-hvz/commits/{{ REVISION }}">{{ REVISION }}</a></li>
+					<li><a href="/">Terms and Conditions</a></li>
+				</ul>
+		</footer>
+		
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	</body>
 </html>

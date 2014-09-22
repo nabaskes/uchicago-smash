@@ -33,6 +33,9 @@ class Smasher(models.Model):
 	pm = models.IntegerField(default=1000)
 	smash4 = models.IntegerField(default=1000)
 
+	def get_real_name(self):
+		return self.user.get_full_name()
+
 	def __unicode__(self):
 		name = self.user.get_full_name()
 		return "%s, %s" % (self.tag, name)

@@ -57,3 +57,18 @@
 		background-color: #600000;
 	}
 }
+
+body {
+	overflow-x: hidden;
+	background-color: #D6D6CE;
+}
+
+.extendfull, .extendleft {
+	padding-left: 3000px;
+	margin-left: -3000px;
+}
+
+.extendfull, .extendright {
+	padding-right: 3000px;
+	margin-right: -3000px;
+}

@@ -25,6 +25,14 @@ class HomeView(TemplateView):
 			return redirect("register-smasher")
 		return super(HomeView, self).dispatch(request, *args, **kwargs)
 
+	def get_context_data(self, **kwargs):
+		context = super(HomeView, self).get_context_data(**kwargs)
+		smashers = Smasher.objects.all()
+		context['top_melee'] = smashers.order_by('-melee')[:5]
+		context['top_pm'] = smashers.order_by('-pm')[:5]
+		context['top_smash4'] = smashers.order_by('-smash4')[:5]
+		return context
+
 class RegistrationView(FormView):
 	form_class = RegistrationForm
 	template_name = 'power_ranking/registration.html'
