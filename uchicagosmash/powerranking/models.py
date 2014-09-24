@@ -29,9 +29,9 @@ class Smasher(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="+")
 	tag = models.CharField(max_length=64)	
 	dorm = models.CharField(max_length=4, choices=DORMS)
-	melee = models.IntegerField(default=1000)
-	pm = models.IntegerField(default=1000)
-	smash4 = models.IntegerField(default=1000)
+	melee = models.IntegerField(default=0)
+	pm = models.IntegerField(default=0)
+	smash4 = models.IntegerField(default=0)
 
 	def get_real_name(self):
 		return self.user.get_full_name()

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+	<div class="page-header">
+		<h1>Unverified Matches</h1>
+	</div>
+
+{% if matches %}
+	{% for match in matches %}
+		<div class="row">
+			<div class="col-md-4">
+				<label for="verified">
+				{% if match.winner.user != user %}
+				<span class="text-success">{{ match.winner.tag }} WON</span>
+				{% else %}
+				<span class="text-danger">{{ match.loser.tag }} LOST</span>
+				{% endif %}
+				</label>
+				<a class="btn btn-success" href="{% url 'verify-match' pk=match.pk %}">Confirm</a>
+				<a class="btn btn-danger" href="{% url 'delete-match' pk=match.pk %}">Deny</a><br>
+
+			</div>
+		</div>
+		
+	{% endfor %}
+{% else %}
+<p>Looks like you're all caught up!</p>
+<p><a href="{% url 'home' %}">Return home</a> or <a href="{% url 'record-match' %}">report a new match</a>.
+{% endif %}
+{% endblock %}

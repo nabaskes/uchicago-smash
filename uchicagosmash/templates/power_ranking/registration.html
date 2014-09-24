@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+	<h1>Register</h1>
+</div>
+
+{% if user.is_authenticated %}
+<form role="form" method="post">
+	{% csrf_token %}
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-4">
+				<label for="tag">Tag</label>
+				{{ form.tag.errors }}
+				<input id="tag" type="text" class="form-control" name="tag" required>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-4">
+				<label for="dorm">Dorm</label>
+				{{ form.tag.errors }}
+				{{ form.dorm }}
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-4">
+				<label for="agree">I agree to the Terms and Conditions of this site.</label>
+				{{ form.agree.errors }}
+				{{ form.agree }}
+			</div>
+		</div>
+	</div>
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endif %}
+{% endblock %}

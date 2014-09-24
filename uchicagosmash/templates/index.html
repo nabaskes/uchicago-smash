@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+
+<div class="jumbotron" style="background-color:black; float:right;">
+	<img src="{{ STATIC_URL }}img/Untitled.png" />
+
+<div style="float:right; padding-left:600px; color:white;">
+	
+	</div>
+</div>
+
+
+<div style="float:left">
+	<ul class="list-group">
+		<li class="list-group-item"><h2>Melee Power Ranking</h2></li>
+		{% for smasher in top_melee %}
+		<li class="list-group-item">{{ smasher.tag }}</li>
+		{% endfor %}
+	</ul>
+
+	<ul class="list-group">
+		<li class="list-group-item"><h2>Project M Power Ranking</h2></li>
+		{% for smasher in top_pm %}
+		<li class="list-group-item">{{ smasher.tag }}</li>
+		{% endfor %}
+	</ul>
+
+	<ul class="list-group">
+		<li class="list-group-item"><h2>Smash 4 Power Ranking</h2></li>
+		{% for smasher in top_smash4 %}
+		<li class="list-group-item">{{ smasher.tag }}</li>
+		{% endfor %}
+	</ul>
+	
+</div>
+
+</div>
+{% endblock %}
